@@ -1,0 +1,2 @@
+﻿recursive-include nexgen_branding *.json *.js *.css *.html *.svg *.png *.ico *.txt *.md
+include *.md *.txt *.toml
