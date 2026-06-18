@@ -1,0 +1,69 @@
+﻿/* ================================================================
+   nexgen_web.css  —  NexGen Branding for public Website pages
+   Login page, portal, WWW routes — Frappe v15 & v16
+   ================================================================ */
+
+/* ── 1. Login page – hide Frappe/ERPNext logo ───────────────── */
+.login-content img[src*="frappe"],
+.login-content img[src*="erpnext"],
+.login-header img[src*="frappe"],
+.login-header img[src*="erpnext"],
+.navbar-brand img[src*="frappe"],
+.navbar-brand img[src*="erpnext"],
+img.frappe-logo,
+img.erpnext-logo {
+    display: none !important;
+}
+
+/* Show NexGen logo on login page */
+.login-content .application-home-link::before,
+.page-card-head::before {
+    content: "";
+    display: block;
+    width: 180px;
+    height: 48px;
+    margin: 0 auto 16px;
+    background-image: url("/assets/nexgen_branding/images/nexgen_logo.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+/* ── 2. Hide "Powered by Frappe" on login & web pages ────────── */
+.footer-powered,
+.powered-by,
+.login-powered-by,
+a[href*="frappe.io"],
+a[href*="erpnext.com"],
+footer .text-muted a,
+.web-footer .powered-by {
+    display: none !important;
+}
+
+/* ── 3. Login page title / heading color ─────────────────────── */
+.login-content h4,
+.login-content .sign-in-text {
+    color: #4F46E5 !important;
+}
+
+/* ── 4. Primary button on login/web ─────────────────────────── */
+.btn-primary {
+    background-color: #4F46E5 !important;
+    border-color: #4F46E5 !important;
+}
+
+.btn-primary:hover {
+    background-color: #4338CA !important;
+    border-color: #4338CA !important;
+}
+
+/* ── 5. Public navbar brand area ─────────────────────────────── */
+.navbar-brand {
+    font-weight: 700;
+    color: #4F46E5 !important;
+}
+
+/* ── 6. Web page footer – override brand ────────────────────── */
+.web-footer .container .row .text-center {
+    display: none !important;
+}

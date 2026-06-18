@@ -1,0 +1,98 @@
+﻿/* ================================================================
+   nexgen_desk.css  —  NexGen Branding for the Frappe Desk
+   Compatible with Frappe v15 & v16
+   ================================================================ */
+
+/* ── 1. Hide all Frappe / ERPNext logos ─────────────────────── */
+/* Navbar logo image that shows frappe/erpnext SVG */
+.navbar-brand img,
+.frappe-logo,
+.erpnext-logo,
+img[src*="frappe-logo"],
+img[src*="erpnext-logo"],
+img[src*="frappe_logo"],
+img[src*="erpnext_logo"],
+img[src*="/assets/frappe/images/frappe-logo"],
+img[src*="/assets/erpnext/images/erpnext-logo"] {
+    display: none !important;
+}
+
+/* ── 2. NexGen logo — injected via JS data-uri or bg-image ─── */
+.navbar-brand::before {
+    content: "";
+    display: inline-block;
+    width: 120px;
+    height: 32px;
+    background-image: url("/assets/nexgen_branding/images/nexgen_logo.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center;
+    vertical-align: middle;
+}
+
+/* ── 3. Hide "Powered by Frappe" footer ──────────────────────── */
+.footer-powered,
+.powered-by,
+a[href*="frappe.io"],
+a[href*="erpnext.com"],
+.text-muted.small.footer-powered,
+footer .frappe-brand,
+.page-container footer a[href*="frappe"],
+.layout-footer .text-muted {
+    display: none !important;
+}
+
+/* ── 4. Hide Frappe / ERPNext references in Help menu ────────── */
+.help-links a[href*="erpnext.com"],
+.help-links a[href*="frappe.io"],
+.dropdown-menu a[href*="discuss.frappe.io"],
+.dropdown-menu a[href*="frappecloud.com"],
+.dropdown-menu a[href*="erpnext.com/docs"],
+.navbar-right .dropdown-menu li:has(a[href*="frappe.io"]),
+.navbar-right .dropdown-menu li:has(a[href*="erpnext.com"]) {
+    display: none !important;
+}
+
+/* ── 5. About / Version dialog — hide Frappe branding ────────── */
+.about-app-description,
+.about-erp-description,
+.modal .frappe-version,
+.modal .erpnext-version,
+#about-dialog .modal-body img[src*="frappe"],
+#about-dialog .modal-body img[src*="erpnext"] {
+    display: none !important;
+}
+
+/* ── 6. App Switcher — logo patches ──────────────────────────── */
+.app-switcher-item img[src*="frappe"],
+.app-switcher-item img[src*="erpnext"],
+.app-logo[src*="frappe"],
+.app-logo[src*="erpnext"] {
+    content: url("/assets/nexgen_branding/images/nexgen_logo.svg") !important;
+}
+
+/* ── 7. Splash / Loading screen ──────────────────────────────── */
+#splash img,
+.frappe-splash img,
+img.splash-logo {
+    content: url("/assets/nexgen_branding/images/nexgen_logo.svg") !important;
+}
+
+/* ── 8. Email / Print branding ───────────────────────────────── */
+.print-format-header img[src*="frappe"],
+.print-format-header img[src*="erpnext"] {
+    display: none !important;
+}
+
+/* ── 9. Desk accent color — NexGen indigo brand ─────────────── */
+:root {
+    --primary: #4F46E5;
+    --primary-color: #4F46E5;
+    --btn-primary-bg: #4F46E5;
+    --sidebar-select-color: rgba(79, 70, 229, 0.12);
+}
+
+/* ── 10. Custom scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #4F46E5; border-radius: 3px; }
