@@ -7,9 +7,7 @@ authors = [
 description = "White-label branding for NexGen ERP"
 requires-python = ">=3.10"
 readme = "README.md"
-dependencies = [
-    "frappe"
-]
+dependencies = []
 
 [build-system]
 requires = ["flit_core >=3.4,<4"]
