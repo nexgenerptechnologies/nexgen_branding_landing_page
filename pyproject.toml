@@ -3,15 +3,14 @@ name = "nexgen_branding"
 authors = [
     { name = "NexGen Enterprises", email = "info@nexgenenterprises.com" }
 ]
-description = "White-label branding for NexGen ERP, CRM, and HRMS (Frappe v15/v16)"
+description = "White-label branding for NexGen ERP"
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
-dependencies = []
+dependencies = [
+    "frappe"
+]
 
 [build-system]
 requires = ["flit_core >=3.4,<4"]
 build-backend = "flit_core.buildapi"
-
-[tool.bench.dev-dependencies]
-# add development dependencies here
