@@ -1,12 +1,12 @@
-﻿[project]
+[project]
 name = "nexgen_branding"
+version = "1.0.0"
 authors = [
     { name = "NexGen Enterprises", email = "info@nexgenenterprises.com" }
 ]
 description = "White-label branding for NexGen ERP"
 requires-python = ">=3.10"
 readme = "README.md"
-dynamic = ["version"]
 dependencies = [
     "frappe"
 ]
