@@ -1,9 +1,0 @@
-﻿{
-  "name": "nexgen_branding",
-  "version": "1.0.0",
-  "description": "NexGen white-label branding for Frappe v15/v16",
-  "private": true,
-  "scripts": {
-    "build": "bench build --app nexgen_branding"
-  }
-}
