@@ -1,4 +1,4 @@
-﻿/**
+/**
  * nexgen_desk.js
  * NexGen Branding — Frappe Desk (back-office) JS overrides
  * Compatible with Frappe v15 & v16
@@ -123,6 +123,7 @@
 
     /* ── Full page scan & replace ────────────────────────────── */
     function runBrandingPass(root) {
+        cleanSidebarItems();
         replaceTextNodes(root || document.body);
         replaceLogos(root || document);
         patchTitle();
@@ -202,7 +203,19 @@
         }
     }
 
-    /* ── Override Help menu items ─────────────────────────────── */
+        /* Hide unwanted sidebar items */
+    function cleanSidebarItems() {
+        const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health'];
+        const els = document.querySelectorAll('.sidebar-item-container span, .item-label, .sidebar-action, .dropdown-item span, li span');
+        els.forEach(span => {
+            if (itemsToHide.includes(span.textContent.trim())) {
+                const container = span.closest('li') || span.closest('.standard-sidebar-item') || span.closest('.sidebar-item-container') || span.closest('.sidebar-action') || span.closest('a');
+                if (container) container.style.display = 'none';
+            }
+        });
+    }
+
+    /* Override Help menu items */
     function cleanHelpMenu() {
         const helpLinks = document.querySelectorAll(
             ".help-links a, .dropdown-menu a[href*='frappe.io'], " +
