@@ -55,3 +55,7 @@ jinja = {
 # Fixtures  (to export/import configuration as JSON)
 # ─────────────────────────────────────────────────────────
 fixtures = []
+
+# Set default homepage to our landing page (www/index.html)
+home_page = "index"
+

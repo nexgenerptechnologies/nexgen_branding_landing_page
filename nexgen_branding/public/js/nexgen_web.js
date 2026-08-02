@@ -32,14 +32,7 @@
         for (const child of node.childNodes) replaceTextNodes(child);
     }
 
-    function replaceLogos() {
-        document.querySelectorAll("img").forEach(img => {
-            const src = img.getAttribute("src") || "";
-            if (src.includes("frappe") || src.includes("erpnext")) {
-                img.src = LOGO_URL;
-                img.style.objectFit = "contain";
-                img.style.maxHeight = "48px";
-            }
+    
         });
     }
 
@@ -57,7 +50,7 @@
 
     function init() {
         replaceTextNodes(document.body);
-        replaceLogos();
+        
         patchTitle();
         hidePoweredBy();
     }
@@ -84,3 +77,4 @@
     });
 
 })();
+
