@@ -114,9 +114,6 @@ def update_website_context(context):
     """
     brand_title = _get_installed_app_brand()
 
-    context["app_name"]       = brand_title
-    context["brand_html"]     = brand_title
-    context["app_logo_url"]   = LOGO_URL
-    context["favicon"]        = FAVICON_URL
     context["powered_by"]     = ""          # blank out "Powered by Frappe"
     context["hide_powered_by"] = True
+
