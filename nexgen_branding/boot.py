@@ -125,27 +125,61 @@ def _filter_blocked_workspaces(sidebar_items):
         
     try:
         user = frappe.get_doc("User", frappe.session.user)
-        # Frappe stores unchecked modules in the 'block_modules' child table
         blocked_modules = [d.module for d in user.get("block_modules", [])]
         
         if not blocked_modules:
             return
 
-        # Map Workspace Name -> Module
         workspaces = frappe.get_all("Workspace", fields=["name", "module"])
         ws_module_map = {w.name: w.module for w in workspaces}
         
+        # Hardcoded fallback map because Frappe v15 standard workspaces 
+        # often leave the 'module' database field blank!
+        FALLBACK_MAP = {
+            "Accounting": "Accounts",
+            "Accounts": "Accounts",
+            "Assets": "Assets",
+            "Buying": "Buying",
+            "CRM": "CRM",
+            "HR": "HR",
+            "India Compliance": "GST India",
+            "Manufacturing": "Manufacturing",
+            "Projects": "Projects",
+            "Quality": "Quality Management",
+            "Selling": "Selling",
+            "Stock": "Stock",
+            "Subcontracting": "Subcontracting",
+            "Support": "Support",
+            "Organization": "Core",
+            "Settings": "Setup",
+            "ERPNext Settings": "Setup",
+            "NexGen ERP Settings": "Setup",
+            "Website": "Website",
+            "Integrations": "Integrations",
+            "Customization": "Custom",
+            "Build": "Custom"
+        }
+
         def filter_recursive(items):
             filtered = []
             for item in items:
                 ws_name = item.get("name")
+                ws_title = item.get("title")
+                
+                # 1. Try DB module field
                 ws_module = ws_module_map.get(ws_name)
                 
-                # If this workspace's module is blocked, skip it
+                # 2. Try fallback mapping by name or title
+                if not ws_module:
+                    ws_module = FALLBACK_MAP.get(ws_name) or FALLBACK_MAP.get(ws_title)
+                
+                # 3. Direct match if title is exactly the module name
+                if not ws_module:
+                    ws_module = ws_title
+                
                 if ws_module and ws_module in blocked_modules:
                     continue
                     
-                # Check children (dropdowns/categories)
                 if item.get("items"):
                     filter_recursive(item["items"])
                     
@@ -156,3 +190,4 @@ def _filter_blocked_workspaces(sidebar_items):
         
     except Exception as e:
         frappe.log_error(title="NexGen Branding Workspace Filter", message=str(e))
+
