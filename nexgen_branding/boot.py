@@ -79,6 +79,10 @@ def boot_session(bootinfo):
     if hasattr(bootinfo, "sidebar_pages"):
         _patch_sidebar(bootinfo.sidebar_pages)
         _filter_blocked_workspaces(bootinfo.sidebar_pages)
+        
+    # In v15/v16, Desktop icons are driven by allowed_workspaces
+    if hasattr(bootinfo, "allowed_workspaces"):
+        _filter_blocked_workspaces(bootinfo.allowed_workspaces)
 
     bootinfo.help_links = []
 
@@ -190,4 +194,5 @@ def _filter_blocked_workspaces(sidebar_items):
         
     except Exception as e:
         frappe.log_error(title="NexGen Branding Workspace Filter", message=str(e))
+
 
