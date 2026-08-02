@@ -15,19 +15,7 @@ img.erpnext-logo {
     display: none !important;
 }
 
-/* Show NexGen logo on login page */
-.login-content .application-home-link::before,
-.page-card-head::before {
-    content: "";
-    display: block;
-    width: 180px;
-    height: 48px;
-    margin: 0 auto 16px;
-    background-image: url("/assets/nexgen_branding/images/nexgen_logo.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
+
 
 /* ── 2. Hide "Powered by Frappe" on login & web pages ────────── */
 .footer-powered,
@@ -67,3 +55,4 @@ footer .text-muted a,
 .web-footer .container .row .text-center {
     display: none !important;
 }
+
