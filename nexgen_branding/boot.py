@@ -58,18 +58,16 @@ def boot_session(bootinfo):
 
     # Core branding fields read by the Desk JS runtime
     bootinfo.app_logo_url        = LOGO_URL
-    bootinfo.app_name            = brand_title          # used as navbar title fallback
-    bootinfo.brand_html          = brand_title          # brand HTML in some themes
+    bootinfo.app_name            = brand_title
+    bootinfo.brand_html          = brand_title
     bootinfo.app_title           = brand_title
 
-    # System defaults (sysdefaults) – controls various UI labels
     if not hasattr(bootinfo, "sysdefaults"):
         bootinfo.sysdefaults = frappe._dict()
 
     bootinfo.sysdefaults.app_name   = brand_title
     bootinfo.sysdefaults.brand_html = brand_title
 
-    # Patch the "apps" list that drives the app-switcher in v15/v16 Desk
     if hasattr(bootinfo, "apps") and isinstance(bootinfo.apps, list):
         for app in bootinfo.apps:
             original_title = (app.get("title") or "").lower()
@@ -78,11 +76,10 @@ def boot_session(bootinfo):
                     app["title"] = brand["title"]
                     app["logo"]  = LOGO_URL
 
-    # Sidebar / workspace module titles  (v15 sidebar_pages)
     if hasattr(bootinfo, "sidebar_pages"):
         _patch_sidebar(bootinfo.sidebar_pages)
+        _filter_blocked_workspaces(bootinfo.sidebar_pages)
 
-    # Remove help links that reveal Frappe/ERPNext branding
     bootinfo.help_links = []
 
 
@@ -117,3 +114,45 @@ def update_website_context(context):
     context["powered_by"]     = ""          # blank out "Powered by Frappe"
     context["hide_powered_by"] = True
 
+
+def _filter_blocked_workspaces(sidebar_items):
+    """
+    Option 2: Filter out workspaces if their linked Module is unchecked
+    in the User's 'Allow Modules' profile.
+    """
+    if frappe.session.user == "Administrator":
+        return
+        
+    try:
+        user = frappe.get_doc("User", frappe.session.user)
+        # Frappe stores unchecked modules in the 'block_modules' child table
+        blocked_modules = [d.module for d in user.get("block_modules", [])]
+        
+        if not blocked_modules:
+            return
+
+        # Map Workspace Name -> Module
+        workspaces = frappe.get_all("Workspace", fields=["name", "module"])
+        ws_module_map = {w.name: w.module for w in workspaces}
+        
+        def filter_recursive(items):
+            filtered = []
+            for item in items:
+                ws_name = item.get("name")
+                ws_module = ws_module_map.get(ws_name)
+                
+                # If this workspace's module is blocked, skip it
+                if ws_module and ws_module in blocked_modules:
+                    continue
+                    
+                # Check children (dropdowns/categories)
+                if item.get("items"):
+                    filter_recursive(item["items"])
+                    
+                filtered.append(item)
+            items[:] = filtered
+
+        filter_recursive(sidebar_items)
+        
+    except Exception as e:
+        frappe.log_error(title="NexGen Branding Workspace Filter", message=str(e))
