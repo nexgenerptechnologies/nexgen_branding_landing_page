@@ -65,3 +65,8 @@ permission_query_conditions = {
     "Workspace": "nexgen_branding.boot.get_workspace_query_condition"
 }
 
+
+# Inject custom Javascript for specific Doctypes
+doctype_js = {
+    "User": "public/js/user.js"
+}
