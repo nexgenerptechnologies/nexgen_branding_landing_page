@@ -196,3 +196,64 @@ def _filter_blocked_workspaces(sidebar_items):
         frappe.log_error(title="NexGen Branding Workspace Filter", message=str(e))
 
 
+
+def get_workspace_query_condition(user):
+    """
+    Enforce 'Allow Modules' at the database level for the Workspace API.
+    Frappe Desk fetches Desktop icons dynamically via API; this hook intercepts
+    the SQL query to permanently hide blocked workspaces.
+    """
+    if not user or user == "Administrator":
+        return ""
+
+    try:
+        user_doc = frappe.get_doc("User", user)
+        blocked_modules = [d.module for d in user_doc.get("block_modules", [])]
+        if not blocked_modules:
+            return ""
+
+        workspaces = frappe.get_all("Workspace", fields=["name", "module", "title"])
+        
+        FALLBACK_MAP = {
+            "Accounting": "Accounts",
+            "Accounts": "Accounts",
+            "Assets": "Assets",
+            "Buying": "Buying",
+            "CRM": "CRM",
+            "HR": "HR",
+            "India Compliance": "GST India",
+            "Manufacturing": "Manufacturing",
+            "Projects": "Projects",
+            "Quality": "Quality Management",
+            "Selling": "Selling",
+            "Stock": "Stock",
+            "Subcontracting": "Subcontracting",
+            "Support": "Support",
+            "Organization": "Core",
+            "Settings": "Setup",
+            "ERPNext Settings": "Setup",
+            "NexGen ERP Settings": "Setup",
+            "Website": "Website",
+            "Integrations": "Integrations",
+            "Customization": "Custom",
+            "Build": "Custom"
+        }
+
+        blocked_names = []
+        for w in workspaces:
+            ws_mod = w.module or FALLBACK_MAP.get(w.name) or FALLBACK_MAP.get(w.title) or w.title
+            if ws_mod in blocked_modules:
+                blocked_names.append(w.name)
+
+        if blocked_names:
+            # Format safely for SQL IN clause
+            safe_names = []
+            for n in blocked_names:
+                safe_n = str(n).replace("'", "''")
+                safe_names.append(f"'{safe_n}'")
+            return f"\	abWorkspace\.name NOT IN ({', '.join(safe_names)})"
+
+    except Exception as e:
+        frappe.log_error("NexGen Workspace Query Error", str(e))
+
+    return ""

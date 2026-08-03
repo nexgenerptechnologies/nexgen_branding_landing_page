@@ -59,3 +59,8 @@ fixtures = []
 # Set default homepage to our landing page (www/index.html)
 home_page = "index"
 
+
+# Override Workspace queries to forcefully hide blocked modules from API
+permission_query_conditions = {
+    "Workspace": "nexgen_branding.boot.get_workspace_query_condition"
+}
