@@ -203,12 +203,21 @@
         }
     }
 
-                        /* Absolute brute-force sweeper for v16 Desktop Icons & Sidebar */
+                            /* Immortal sweeper for v16 Desktop Icons & Sidebar */
     function cleanSidebarItems() {
+        // Run once immediately
+        sweepNow();
+        // Run constantly to defeat Vue Virtual DOM rerenders
+        if (!window._immortalSweeper) {
+            window._immortalSweeper = setInterval(sweepNow, 300);
+        }
+    }
+
+    function sweepNow() {
         const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health'];
         
-        if (frappe.boot && Array.isArray(frappe.boot.nexgen_blocked_workspaces)) {
-            itemsToHide.push(...frappe.boot.nexgen_blocked_workspaces);
+        if (window.frappe && window.frappe.boot && Array.isArray(window.frappe.boot.nexgen_blocked_workspaces)) {
+            itemsToHide.push(...window.frappe.boot.nexgen_blocked_workspaces);
         }
 
         // 1. Search every leaf text element on the page
@@ -237,13 +246,17 @@
                         )) {
                             // Prevent hiding the entire page by checking component size
                             if (container.offsetWidth < 600 || classes.includes('desk-sidebar')) {
-                                container.style.setProperty('display', 'none', 'important');
+                                if (container.style.display !== 'none') {
+                                    container.style.setProperty('display', 'none', 'important');
+                                }
                                 hidden = true;
                                 
                                 // Hide the parent grid column to prevent blank spaces
                                 const col = container.parentElement;
                                 if (col && typeof col.className === 'string' && col.className.includes('col-')) {
-                                    col.style.setProperty('display', 'none', 'important');
+                                    if (col.style.display !== 'none') {
+                                        col.style.setProperty('display', 'none', 'important');
+                                    }
                                 }
                                 break;
                             }
@@ -254,7 +267,9 @@
                     // Fallback if no specific container class was found
                     if (!hidden) {
                         let link = el.closest('a') || el.closest('li') || el.closest('[data-name]');
-                        if (link) link.style.setProperty('display', 'none', 'important');
+                        if (link && link.style.display !== 'none') {
+                            link.style.setProperty('display', 'none', 'important');
+                        }
                     }
                 }
             }
@@ -327,6 +342,7 @@
     }
 
 })();
+
 
 
 

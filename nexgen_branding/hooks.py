@@ -15,7 +15,7 @@ app_version = "1.0.0"
 
 # Inject into the Desk (back-office / admin interface)
 app_include_css = "/assets/nexgen_branding/css/nexgen_desk.css"
-app_include_js  = "/assets/nexgen_branding/js/nexgen_desk.js"
+app_include_js  = "/assets/nexgen_branding/js/nexgen_desk_v2.js"
 
 # Inject into all public Website pages (login, portal, www/)
 web_include_css = "/assets/nexgen_branding/css/nexgen_web.css"
@@ -64,3 +64,4 @@ home_page = "index"
 permission_query_conditions = {
     "Workspace": "nexgen_branding.boot.get_workspace_query_condition"
 }
+
