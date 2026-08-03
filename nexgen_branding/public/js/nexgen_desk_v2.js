@@ -214,7 +214,7 @@
     }
 
     function sweepNow() {
-        const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health'];
+        const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health', 'About', 'NexGen Support', 'ERPNext Support', 'Frappe Support'];
         
         if (window.frappe && window.frappe.boot && Array.isArray(window.frappe.boot.nexgen_blocked_workspaces)) {
             itemsToHide.push(...window.frappe.boot.nexgen_blocked_workspaces);
@@ -342,6 +342,7 @@
     }
 
 })();
+
 
 
 
