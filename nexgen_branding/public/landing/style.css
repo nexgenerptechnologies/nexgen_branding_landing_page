@@ -179,35 +179,9 @@ button, input, textarea, select {
   animation: orb-float 12s ease-in-out infinite;
 }
 
-.orb-1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #4F46E5 0%, transparent 70%);
-  top: -180px;
-  left: -140px;
-  animation-delay: 0s;
-  animation-duration: 14s;
-}
-
-.orb-2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, #7C3AED 0%, transparent 70%);
-  top: 30%;
-  right: -120px;
-  animation-delay: -4s;
-  animation-duration: 11s;
-}
-
-.orb-3 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #0EA5E9 0%, transparent 70%);
-  bottom: 10%;
-  left: 25%;
-  animation-delay: -7s;
-  animation-duration: 16s;
-}
+.orb-1 { background: radial-gradient(circle, rgba(79,70,229,0.15) 0%, transparent 70%); }
+.orb-2 { background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%); }
+.orb-3 { background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%); }
 
 .orb-4 {
   width: 350px;
@@ -878,3 +852,4 @@ footer { background: var(--bg-dark); border-top: 1px solid var(--border-glass); 
   .section-title { font-size: 2rem; }
   .hero-title { font-size: 2.4rem; }
 }
+
