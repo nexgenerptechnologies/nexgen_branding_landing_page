@@ -5,41 +5,41 @@
 
 /* ── 1. CSS Custom Properties ───────────────────────────────── */
 :root {
-  /* Brand Colors */
+  /* Brand Colors - Crisp & Modern */
   --color-primary:       #4F46E5;
   --color-primary-light: #6366F1;
-  --color-purple:        #7C3AED;
-  --color-teal:          #0EA5E9;
-  --color-teal-light:    #38BDF8;
+  --color-purple:        #8B5CF6;
+  --color-teal:          #0284C7;
+  --color-teal-light:    #0EA5E9;
 
-  /* Dark Backgrounds */
-  --bg-dark:             #0A0E1A;
-  --bg-dark-2:           #0F1629;
-  --bg-card:             rgba(15, 22, 41, 0.72);
-  --bg-glass:            rgba(79, 70, 229, 0.08);
-  --bg-glass-strong:     rgba(79, 70, 229, 0.14);
+  /* Light Backgrounds */
+  --bg-dark:             #F8FAFC;
+  --bg-dark-2:           #FFFFFF;
+  --bg-card:             #FFFFFF;
+  --bg-glass:            rgba(255, 255, 255, 0.85);
+  --bg-glass-strong:     rgba(255, 255, 255, 0.95);
 
-  /* Text */
-  --text-primary:        #F1F5F9;
-  --text-secondary:      #94A3B8;
+  /* High Contrast Text */
+  --text-primary:        #0F172A;
+  --text-secondary:      #334155;
   --text-muted:          #64748B;
 
-  /* Borders */
-  --border-glass:        rgba(255, 255, 255, 0.09);
-  --border-primary:      rgba(79, 70, 229, 0.35);
+  /* Clean Borders */
+  --border-glass:        rgba(15, 23, 42, 0.08);
+  --border-primary:      rgba(79, 70, 229, 0.2);
 
-  /* Gradients */
-  --grad-primary:        linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
-  --grad-teal:           linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%);
-  --grad-hero:           linear-gradient(135deg, #0A0E1A 0%, #0F1629 60%, #140D2E 100%);
-  --grad-text:           linear-gradient(135deg, #A78BFA 0%, #60A5FA 50%, #34D399 100%);
-  --grad-border:         linear-gradient(135deg, #4F46E5, #7C3AED, #0EA5E9);
+  /* Vibrant Gradients */
+  --grad-primary:        linear-gradient(135deg, #4F46E5 0%, #8B5CF6 100%);
+  --grad-teal:           linear-gradient(135deg, #0284C7 0%, #4F46E5 100%);
+  --grad-hero:           linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+  --grad-text:           linear-gradient(135deg, #4F46E5 0%, #0284C7 50%, #059669 100%);
+  --grad-border:         linear-gradient(135deg, rgba(79,70,229,0.3), rgba(139,92,246,0.3), rgba(14,165,233,0.3));
 
-  /* Shadows */
-  --shadow-glow:         0 0 32px rgba(79, 70, 229, 0.45);
-  --shadow-glow-sm:      0 0 16px rgba(79, 70, 229, 0.30);
-  --shadow-card:         0 8px 32px rgba(0, 0, 0, 0.40);
-  --shadow-teal-glow:    0 0 28px rgba(14, 165, 233, 0.35);
+  /* Soft Elegant Shadows */
+  --shadow-glow:         0 10px 25px -5px rgba(79, 70, 229, 0.25);
+  --shadow-glow-sm:      0 4px 12px -2px rgba(79, 70, 229, 0.15);
+  --shadow-card:         0 12px 35px -5px rgba(15, 23, 42, 0.05), 0 4px 15px -3px rgba(15, 23, 42, 0.03);
+  --shadow-teal-glow:    0 10px 25px -5px rgba(2, 132, 199, 0.2);
 
   /* Typography */
   --font-head:           'Outfit', system-ui, sans-serif;
@@ -852,4 +852,5 @@ footer { background: var(--bg-dark); border-top: 1px solid var(--border-glass); 
   .section-title { font-size: 2rem; }
   .hero-title { font-size: 2.4rem; }
 }
+
 
