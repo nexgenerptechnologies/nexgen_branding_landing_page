@@ -1,6 +1,6 @@
-/**
+﻿/**
  * nexgen_desk.js
- * NexGen Branding — Frappe Desk (back-office) JS overrides
+ * NexGen Branding â€” Frappe Desk (back-office) JS overrides
  * Compatible with Frappe v15 & v16
  *
  * Strategy:
@@ -13,7 +13,7 @@
 (function () {
     "use strict";
 
-    /* ── Brand Configuration ──────────────────────────────────── */
+    /* â”€â”€ Brand Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     const BRAND_MAP = {
         "ERPNext"   : "NexGen ERP",
         "Frappe CRM": "NexGen CRM",
@@ -25,7 +25,7 @@
 
     const LOGO_URL = "/assets/nexgen_branding/images/nexgen_logo.svg";
 
-    /* ── Determine primary brand from installed apps ─────────── */
+    /* â”€â”€ Determine primary brand from installed apps â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function getPrimaryBrand() {
         if (!frappe || !frappe.boot) return "NexGen ERP";
         const apps = (frappe.boot.apps || []).map(a => (a.name || "").toLowerCase());
@@ -34,7 +34,7 @@
         return "NexGen ERP";
     }
 
-    /* ── Apply text brand → displayed title map ─────────────── */
+    /* â”€â”€ Apply text brand â†’ displayed title map â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function applyBrandTitle(text) {
         if (!text) return text;
         // Order matters: longest match first
@@ -45,7 +45,7 @@
         return text;
     }
 
-    /* ── Replace text nodes recursively ──────────────────────── */
+    /* â”€â”€ Replace text nodes recursively â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function replaceTextNodes(node) {
         if (!node) return;
         if (node.nodeType === Node.TEXT_NODE) {
@@ -62,7 +62,7 @@
         }
     }
 
-    /* ── Replace img src that points to frappe/erpnext logos ─── */
+    /* â”€â”€ Replace img src that points to frappe/erpnext logos â”€â”€â”€ */
     function replaceLogos(root) {
         const imgs = (root || document).querySelectorAll("img");
         imgs.forEach(img => {
@@ -75,14 +75,14 @@
         });
     }
 
-    /* ── Patch document.title ─────────────────────────────────── */
+    /* â”€â”€ Patch document.title â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function patchTitle() {
         if (document.title) {
             document.title = applyBrandTitle(document.title);
         }
     }
 
-    /* ── Patch frappe.boot at startup ────────────────────────── */
+    /* â”€â”€ Patch frappe.boot at startup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function patchBoot() {
         if (!window.frappe || !frappe.boot) return;
 
@@ -121,7 +121,7 @@
         frappe.boot.help_links = [];
     }
 
-    /* ── Full page scan & replace ────────────────────────────── */
+    /* â”€â”€ Full page scan & replace â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function runBrandingPass(root) {
         cleanSidebarItems();
         replaceTextNodes(root || document.body);
@@ -129,7 +129,7 @@
         patchTitle();
     }
 
-    /* ── MutationObserver — watch for DOM additions ───────────── */
+    /* â”€â”€ MutationObserver â€” watch for DOM additions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function startObserver() {
         const observer = new MutationObserver(mutations => {
             mutations.forEach(m => {
@@ -154,7 +154,7 @@
         });
     }
 
-    /* ── Frappe route-change hook ─────────────────────────────── */
+    /* â”€â”€ Frappe route-change hook â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function hookFrappeRouter() {
         if (!window.frappe) return;
 
@@ -173,7 +173,7 @@
         });
     }
 
-    /* ── Patch App-Switcher dialog (v15 feature) ─────────────── */
+    /* â”€â”€ Patch App-Switcher dialog (v15 feature) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function patchAppSwitcher() {
         if (!window.frappe) return;
         const orig = frappe.ui && frappe.ui.AppFrame && frappe.ui.AppFrame.prototype;
@@ -185,7 +185,7 @@
         }
     }
 
-    /* ── Override navbar brand text DOM element ──────────────── */
+    /* â”€â”€ Override navbar brand text DOM element â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function patchNavbar() {
         const navbarBrand = document.querySelector(".navbar-brand");
         if (navbarBrand) {
@@ -203,19 +203,22 @@
         }
     }
 
-        /* Hide unwanted sidebar items */
+            /* Hide unwanted sidebar items and workspaces */
     function cleanSidebarItems() {
         const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health'];
-        const els = document.querySelectorAll('.sidebar-item-container span, .item-label, .sidebar-action, .dropdown-item span, li span');
+        
+        if (frappe.boot && frappe.boot.nexgen_blocked_workspaces) {
+            itemsToHide.push(...frappe.boot.nexgen_blocked_workspaces);
+        }
+
+        const els = document.querySelectorAll('.sidebar-item-container span, .item-label, .sidebar-action, .dropdown-item span, li span, .workspace-item .workspace-item-title, .desk-sidebar-item span, .widget-title');
         els.forEach(span => {
             if (itemsToHide.includes(span.textContent.trim())) {
-                const container = span.closest('li') || span.closest('.standard-sidebar-item') || span.closest('.sidebar-item-container') || span.closest('.sidebar-action') || span.closest('a');
+                const container = span.closest('li') || span.closest('.standard-sidebar-item') || span.closest('.sidebar-item-container') || span.closest('.sidebar-action') || span.closest('.workspace-item') || span.closest('a');
                 if (container) container.style.display = 'none';
             }
         });
-    }
-
-    /* Override Help menu items */
+    }/* Override Help menu items */
     function cleanHelpMenu() {
         const helpLinks = document.querySelectorAll(
             ".help-links a, .dropdown-menu a[href*='frappe.io'], " +
@@ -228,7 +231,7 @@
         });
     }
 
-    /* ── About dialog override ────────────────────────────────── */
+    /* â”€â”€ About dialog override â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function patchAboutDialog() {
         $(document).on("shown.bs.modal", ".modal", function () {
             const modal = $(this);
@@ -239,7 +242,7 @@
         });
     }
 
-    /* ── Entry Point ─────────────────────────────────────────── */
+    /* â”€â”€ Entry Point â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function init() {
         patchBoot();
 
@@ -283,3 +286,4 @@
     }
 
 })();
+

@@ -80,9 +80,11 @@ def boot_session(bootinfo):
         _patch_sidebar(bootinfo.sidebar_pages)
         _filter_blocked_workspaces(bootinfo.sidebar_pages)
         
-    # In v15/v16, Desktop icons are driven by allowed_workspaces
     if hasattr(bootinfo, "allowed_workspaces"):
         _filter_blocked_workspaces(bootinfo.allowed_workspaces)
+
+    # NEW: Inject blocked workspace titles for JS to hide forcibly
+    bootinfo.nexgen_blocked_workspaces = _get_blocked_workspace_titles(frappe.session.user)
 
     bootinfo.help_links = []
 
@@ -257,3 +259,32 @@ def get_workspace_query_condition(user):
         frappe.log_error("NexGen Workspace Query Error", str(e))
 
     return ""
+
+def _get_blocked_workspace_titles(user):
+    if not user or user == "Administrator":
+        return []
+    try:
+        doc = frappe.get_doc("User", user)
+        blocked_modules = [d.module for d in doc.get("block_modules", [])]
+        if not blocked_modules:
+            return []
+            
+        workspaces = frappe.get_all("Workspace", fields=["name", "module", "title"])
+        FALLBACK_MAP = {
+            "Accounting": "Accounts", "Accounts": "Accounts", "Assets": "Assets",
+            "Buying": "Buying", "CRM": "CRM", "HR": "HR", "India Compliance": "GST India",
+            "Manufacturing": "Manufacturing", "Projects": "Projects", "Quality": "Quality Management",
+            "Selling": "Selling", "Stock": "Stock", "Subcontracting": "Subcontracting",
+            "Support": "Support", "Organization": "Core", "Settings": "Setup",
+            "ERPNext Settings": "Setup", "NexGen ERP Settings": "Setup", "Website": "Website",
+            "Integrations": "Integrations", "Customization": "Custom", "Build": "Custom"
+        }
+        
+        blocked_titles = []
+        for w in workspaces:
+            ws_mod = w.module or FALLBACK_MAP.get(w.name) or FALLBACK_MAP.get(w.title) or w.title
+            if ws_mod in blocked_modules:
+                blocked_titles.append(w.title or w.name)
+        return blocked_titles
+    except Exception:
+        return []
