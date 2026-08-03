@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 no_header: 1
 no_footer: 1
 -->
@@ -7,13 +7,13 @@ no_footer: 1
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexGen Enterprises — Premier ERPNext Implementation Partner in India</title>
+    <title>NexGen Enterprises â€” Premier ERPNext Implementation Partner in India</title>
     <meta name="description" content="NexGen Enterprises delivers world-class ERPNext implementation services. Transform your business with NexGen ERP, NexGen CRM, and NexGen HRMS. 500+ successful implementations across India.">
     <meta name="keywords" content="ERPNext implementation, ERP software India, Frappe ERP, NexGen ERP, business automation, ERP consulting">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/nexgen_branding/landing/style.css">
+    <link rel="stylesheet" href="/assets/nexgen_branding/landing/style.css?v=lightmode_v1">
 </head>
 <body>
 <!-- Animated Background Orbs -->
@@ -344,7 +344,7 @@ no_footer: 1
 <section id="cta-banner" aria-labelledby="cta-heading">
   <div class="container">
     <div class="cta-inner">
-      <div class="section-badge" style="margin-bottom:24px;position:relative;z-index:1;">&#127775; Limited Time — Free Consultation</div>
+      <div class="section-badge" style="margin-bottom:24px;position:relative;z-index:1;">&#127775; Limited Time â€” Free Consultation</div>
       <h2 class="cta-title" id="cta-heading">Ready to <span class="text-gradient">Transform Your Business?</span></h2>
       <p class="cta-desc">Book a free 60-minute consultation with our certified ERP experts. We will analyze your business and show you exactly how NexGen can cut your operational costs by up to 40%.</p>
       <div class="cta-buttons">
@@ -367,7 +367,7 @@ no_footer: 1
     <div class="contact-grid">
       <div class="contact-info reveal">
         <h3>We&#39;d Love to<br><span class="text-gradient">Hear From You</span></h3>
-        <p>Whether you are exploring ERP for the first time or looking to switch from a legacy system, our team of certified consultants is ready to help you make the right decision — and then implement it flawlessly.</p>
+        <p>Whether you are exploring ERP for the first time or looking to switch from a legacy system, our team of certified consultants is ready to help you make the right decision â€” and then implement it flawlessly.</p>
         <div class="contact-items">
           <div class="contact-item">
             <div class="contact-icon" aria-hidden="true">&#128231;</div>
@@ -512,7 +512,7 @@ no_footer: 1
 
 <!-- ========== SCRIPTS ========== -->
 <script>
-  /* ── Navbar Scroll & Mobile Menu ── */
+  /* â”€â”€ Navbar Scroll & Mobile Menu â”€â”€ */
   const navbar = document.getElementById('navbar');
   const scrollTopBtn = document.getElementById('scroll-top');
   
@@ -530,7 +530,7 @@ no_footer: 1
     }
   });
 
-  /* ── Mobile Menu Toggle ── */
+  /* â”€â”€ Mobile Menu Toggle â”€â”€ */
   const hamburger = document.getElementById('hamburger-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const mobileClose = document.getElementById('mobile-close-btn');
@@ -549,12 +549,12 @@ no_footer: 1
     link.addEventListener('click', toggleMobileMenu);
   });
 
-  /* ── Scroll to Top ── */
+  /* â”€â”€ Scroll to Top â”€â”€ */
   scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  /* ── Smooth Scroll for Anchor Links ── */
+  /* â”€â”€ Smooth Scroll for Anchor Links â”€â”€ */
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -568,7 +568,7 @@ no_footer: 1
     });
   });
 
-  /* ── Reveal on Scroll (Intersection Observer) ── */
+  /* â”€â”€ Reveal on Scroll (Intersection Observer) â”€â”€ */
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -580,7 +580,7 @@ no_footer: 1
   
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  /* ── Animated Counters ── */
+  /* â”€â”€ Animated Counters â”€â”€ */
   function animateCounter(el, target, suffix = '') {
     let start = 0;
     const duration = 2000;
@@ -610,7 +610,7 @@ no_footer: 1
   
   document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
 
-  /* ── Contact Form Submission ── */
+  /* â”€â”€ Contact Form Submission â”€â”€ */
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
@@ -638,3 +638,4 @@ no_footer: 1
 </script>
 </body>
 </html>
+
