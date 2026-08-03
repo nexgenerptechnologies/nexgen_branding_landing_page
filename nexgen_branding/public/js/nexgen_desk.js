@@ -203,7 +203,7 @@
         }
     }
 
-            /* Hide unwanted sidebar items and workspaces */
+                /* Hide unwanted sidebar items and workspaces */
     function cleanSidebarItems() {
         const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health'];
         
@@ -211,11 +211,35 @@
             itemsToHide.push(...frappe.boot.nexgen_blocked_workspaces);
         }
 
-        const els = document.querySelectorAll('.sidebar-item-container span, .item-label, .sidebar-action, .dropdown-item span, li span, .workspace-item .workspace-item-title, .desk-sidebar-item span, .widget-title');
-        els.forEach(span => {
-            if (itemsToHide.includes(span.textContent.trim())) {
-                const container = span.closest('li') || span.closest('.standard-sidebar-item') || span.closest('.sidebar-item-container') || span.closest('.sidebar-action') || span.closest('.workspace-item') || span.closest('a');
-                if (container) container.style.display = 'none';
+        // Aggressive DOM sweeping to hide shortcuts, cards, and sidebar items
+        const textElements = document.querySelectorAll('span, div.title, div.label, div.widget-title, div.shortcut-title');
+        
+        textElements.forEach(el => {
+            const text = el.textContent.trim();
+            if (itemsToHide.includes(text)) {
+                // Find the closest meaningful widget/container to nuke
+                const container = el.closest('.shortcut-widget-box') 
+                    || el.closest('a.shortcut-widget')
+                    || el.closest('.widget-head')
+                    || el.closest('.workspace-item') 
+                    || el.closest('.desk-sidebar-item') 
+                    || el.closest('.standard-sidebar-item') 
+                    || el.closest('.sidebar-item-container') 
+                    || el.closest('.sidebar-action') 
+                    || el.closest('li');
+                
+                if (container) {
+                    container.style.display = 'none';
+                    container.style.visibility = 'hidden';
+                    container.style.opacity = '0';
+                    container.style.pointerEvents = 'none';
+                    
+                    // If it's in a grid column, hide the column too to prevent gaps
+                    const col = container.closest('.widget-col') || container.closest('.shortcut-widget-col') || container.closest('[class*="col-"]');
+                    if (col && col.children.length === 1) {
+                        col.style.display = 'none';
+                    }
+                }
             }
         });
     }/* Override Help menu items */
@@ -286,4 +310,5 @@
     }
 
 })();
+
 
