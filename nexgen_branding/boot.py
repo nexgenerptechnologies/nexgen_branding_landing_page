@@ -280,11 +280,15 @@ def _get_blocked_workspace_titles(user):
             "Integrations": "Integrations", "Customization": "Custom", "Build": "Custom"
         }
         
-        blocked_titles = []
+        blocked_titles = set(blocked_modules) # Include the raw module names just in case
         for w in workspaces:
-            ws_mod = w.module or FALLBACK_MAP.get(w.name) or FALLBACK_MAP.get(w.title) or w.title
-            if ws_mod in blocked_modules:
-                blocked_titles.append(w.title or w.name)
-        return blocked_titles
+            # If the database explicitly says "India Compliance" but we know it's "GST India", map it.
+            ws_mod = FALLBACK_MAP.get(w.name) or FALLBACK_MAP.get(w.title) or w.module or w.title
+            
+            if ws_mod in blocked_modules or w.module in blocked_modules:
+                blocked_titles.add(w.title)
+                blocked_titles.add(w.name)
+                
+        return list(blocked_titles)
     except Exception:
         return []

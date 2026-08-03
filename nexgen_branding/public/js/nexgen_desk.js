@@ -203,7 +203,7 @@
         }
     }
 
-                    /* Aggressive sweeper for v16 Desktop Icons & Sidebar */
+                        /* Absolute brute-force sweeper for v16 Desktop Icons & Sidebar */
     function cleanSidebarItems() {
         const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health'];
         
@@ -211,14 +211,14 @@
             itemsToHide.push(...frappe.boot.nexgen_blocked_workspaces);
         }
 
-        // Search every leaf text element on the page
-        const allElements = document.querySelectorAll("span, div, a, p");
+        // 1. Search every leaf text element on the page
+        const allElements = document.querySelectorAll("span, div, a, p, h1, h2, h3, h4, h5, h6");
         
         allElements.forEach(el => {
             if (el.children.length === 0 && el.textContent) {
                 const text = el.textContent.trim();
                 
-                if (itemsToHide.includes(text)) {
+                if (itemsToHide.includes(text) || (text.startsWith("NexGen ER") && itemsToHide.includes("ERPNext Settings"))) {
                     let container = el.parentElement;
                     let hidden = false;
                     
@@ -226,31 +226,35 @@
                     while (container && container !== document.body) {
                         const classes = container.className || "";
                         if (typeof classes === 'string' && (
-                            classes.includes('shortcut-widget-box') || 
-                            classes.includes('workspace-item') ||
-                            classes.includes('desk-sidebar-item') ||
-                            classes.includes('standard-sidebar-item') ||
-                            classes.includes('widget-group') ||
+                            classes.includes('shortcut') || 
+                            classes.includes('workspace') ||
+                            classes.includes('desk-sidebar') ||
+                            classes.includes('standard-sidebar') ||
+                            classes.includes('widget') ||
                             classes.includes('hub-card') ||
-                            classes.includes('sidebar-action')
+                            classes.includes('sidebar-action') ||
+                            classes.includes('card')
                         )) {
-                            container.style.setProperty('display', 'none', 'important');
-                            hidden = true;
-                            
-                            // Hide the parent column to prevent blank spaces
-                            const col = container.parentElement;
-                            if (col && typeof col.className === 'string' && col.className.includes('col-')) {
-                                col.style.setProperty('display', 'none', 'important');
+                            // Prevent hiding the entire page by checking component size
+                            if (container.offsetWidth < 600 || classes.includes('desk-sidebar')) {
+                                container.style.setProperty('display', 'none', 'important');
+                                hidden = true;
+                                
+                                // Hide the parent grid column to prevent blank spaces
+                                const col = container.parentElement;
+                                if (col && typeof col.className === 'string' && col.className.includes('col-')) {
+                                    col.style.setProperty('display', 'none', 'important');
+                                }
+                                break;
                             }
-                            break;
                         }
                         container = container.parentElement;
                     }
                     
                     // Fallback if no specific container class was found
-                    if (!hidden && (text === 'Help' || text === 'System Health')) {
-                        let li = el.closest('li');
-                        if (li) li.style.setProperty('display', 'none', 'important');
+                    if (!hidden) {
+                        let link = el.closest('a') || el.closest('li') || el.closest('[data-name]');
+                        if (link) link.style.setProperty('display', 'none', 'important');
                     }
                 }
             }
@@ -323,6 +327,7 @@
     }
 
 })();
+
 
 
 
