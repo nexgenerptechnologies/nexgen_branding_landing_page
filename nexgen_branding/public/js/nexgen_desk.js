@@ -203,41 +203,54 @@
         }
     }
 
-                /* Hide unwanted sidebar items and workspaces */
+                    /* Aggressive sweeper for v16 Desktop Icons & Sidebar */
     function cleanSidebarItems() {
         const itemsToHide = ['Help', 'Delete Demo Data', 'Keyboard Shortcuts', 'System Health'];
         
-        if (frappe.boot && frappe.boot.nexgen_blocked_workspaces) {
+        if (frappe.boot && Array.isArray(frappe.boot.nexgen_blocked_workspaces)) {
             itemsToHide.push(...frappe.boot.nexgen_blocked_workspaces);
         }
 
-        // Aggressive DOM sweeping to hide shortcuts, cards, and sidebar items
-        const textElements = document.querySelectorAll('span, div.title, div.label, div.widget-title, div.shortcut-title');
+        // Search every leaf text element on the page
+        const allElements = document.querySelectorAll("span, div, a, p");
         
-        textElements.forEach(el => {
-            const text = el.textContent.trim();
-            if (itemsToHide.includes(text)) {
-                // Find the closest meaningful widget/container to nuke
-                const container = el.closest('.shortcut-widget-box') 
-                    || el.closest('a.shortcut-widget')
-                    || el.closest('.widget-head')
-                    || el.closest('.workspace-item') 
-                    || el.closest('.desk-sidebar-item') 
-                    || el.closest('.standard-sidebar-item') 
-                    || el.closest('.sidebar-item-container') 
-                    || el.closest('.sidebar-action') 
-                    || el.closest('li');
+        allElements.forEach(el => {
+            if (el.children.length === 0 && el.textContent) {
+                const text = el.textContent.trim();
                 
-                if (container) {
-                    container.style.display = 'none';
-                    container.style.visibility = 'hidden';
-                    container.style.opacity = '0';
-                    container.style.pointerEvents = 'none';
+                if (itemsToHide.includes(text)) {
+                    let container = el.parentElement;
+                    let hidden = false;
                     
-                    // If it's in a grid column, hide the column too to prevent gaps
-                    const col = container.closest('.widget-col') || container.closest('.shortcut-widget-col') || container.closest('[class*="col-"]');
-                    if (col && col.children.length === 1) {
-                        col.style.display = 'none';
+                    // Walk up the DOM tree to find the widget card or sidebar item
+                    while (container && container !== document.body) {
+                        const classes = container.className || "";
+                        if (typeof classes === 'string' && (
+                            classes.includes('shortcut-widget-box') || 
+                            classes.includes('workspace-item') ||
+                            classes.includes('desk-sidebar-item') ||
+                            classes.includes('standard-sidebar-item') ||
+                            classes.includes('widget-group') ||
+                            classes.includes('hub-card') ||
+                            classes.includes('sidebar-action')
+                        )) {
+                            container.style.setProperty('display', 'none', 'important');
+                            hidden = true;
+                            
+                            // Hide the parent column to prevent blank spaces
+                            const col = container.parentElement;
+                            if (col && typeof col.className === 'string' && col.className.includes('col-')) {
+                                col.style.setProperty('display', 'none', 'important');
+                            }
+                            break;
+                        }
+                        container = container.parentElement;
+                    }
+                    
+                    // Fallback if no specific container class was found
+                    if (!hidden && (text === 'Help' || text === 'System Health')) {
+                        let li = el.closest('li');
+                        if (li) li.style.setProperty('display', 'none', 'important');
                     }
                 }
             }
@@ -310,5 +323,6 @@
     }
 
 })();
+
 
 
