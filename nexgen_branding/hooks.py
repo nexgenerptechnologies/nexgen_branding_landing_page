@@ -57,7 +57,7 @@ jinja = {
 fixtures = []
 
 # Set default homepage to our landing page (www/index.html)
-home_page = "index"
+home_page = "login"
 
 
 # Override Workspace queries to forcefully hide blocked modules from API
@@ -70,3 +70,4 @@ permission_query_conditions = {
 doctype_js = {
     "User": "public/js/user.js"
 }
+
